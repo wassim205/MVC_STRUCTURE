@@ -1,4 +1,13 @@
-<?php include 'partials/header.php'; ?>
+<?php include 'partials/header.php';
+use App\Core\Security;
+?>
+
+<?php if (!empty($webError)): ?>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Error!</strong>
+        <span class="block sm:inline"><?php echo $webError; ?></span>
+    </div>
+<?php endif; ?>
 
 <!-- Login Page -->
 <div id="loginPage" class="fixed inset-0 flex items-center justify-center p-4">
@@ -9,27 +18,26 @@
 
         <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Welcome Back</h2>
 
-        <form class="space-y-6" method="post">
+        <form class="space-y-6" method="post" action="/login">
+        <input type="hidden" name="_token" value="<?= Security::generateCsrfToken() ?>">
+   
+            
             <div>
                 <label class="block text-gray-700 mb-2">Email</label>
-                <input type="email"
+                <input type="email" name="email"
                     class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-purple-500 transition-colors"
                     placeholder="Enter your email">
             </div>
 
             <div>
                 <label class="block text-gray-700 mb-2">Password</label>
-                <input type="password"
+                <input type="password" name="password"
                     class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-purple-500 transition-colors"
                     placeholder="••••••••">
             </div>
 
 
-            <?php if (isset($error)): ?>
-                <div class="error"><?= $error ?></div>
-            <?php endif; ?>
-
-            <button class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg hover:scale-[1.02] transition-transform">
+            <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg hover:scale-[1.02] transition-transform">
                 Log In
             </button>
         </form>

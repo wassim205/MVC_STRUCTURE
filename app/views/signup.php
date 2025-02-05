@@ -1,6 +1,8 @@
 <?php
 
-include 'partials/header.php'; ?>
+include 'partials/header.php';
+use App\Core\Security;
+?>
 
 
 <?php if (!empty($webError)): ?>
@@ -19,13 +21,15 @@ include 'partials/header.php'; ?>
 
         <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Create Account</h2>
 
-        <form class="space-y-6" method="post">
+        <form class="space-y-6" method="post" action="/signup">
 
-            <input type="hidden" name="_token" value="<?php echo $csrfToken; ?>">
-            <?php if (!empty($passwordErrors)): ?>
+            <input type="hidden" name="_token" value="<?= Security::generateCsrfToken() ?>">
+
+
+            <?php if (!empty($userNameErrors)): ?>
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                     <strong class="font-bold">Error!</strong>
-                    <span class="block sm:inline"><?php echo $passwordErrors; ?></span>
+                    <span class="block sm:inline"><?php echo $userNameErrors; ?></span>
                 </div>
             <?php endif; ?>
 
@@ -36,10 +40,10 @@ include 'partials/header.php'; ?>
                 </div>
             <?php endif; ?>
 
-            <?php if (!empty($userNameErrors)): ?>
+            <?php if (!empty($passwordErrors)): ?>
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                     <strong class="font-bold">Error!</strong>
-                    <span class="block sm:inline"><?php echo $userNameErrors; ?></span>
+                    <span class="block sm:inline"><?php echo $passwordErrors; ?></span>
                 </div>
             <?php endif; ?>
             <div>
@@ -63,8 +67,8 @@ include 'partials/header.php'; ?>
                     placeholder="••••••••">
             </div>
 
-            <button class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg hover:scale-[1.02] transition-transform">
-                <a href="/create">Sign Up</a>
+            <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg hover:scale-[1.02] transition-transform">
+                Sign Up
             </button>
         </form>
 

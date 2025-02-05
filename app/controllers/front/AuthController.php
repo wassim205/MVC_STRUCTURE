@@ -6,7 +6,6 @@ use App\Core\Auth;
 use App\Core\Security;
 use App\Core\Validator;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller {
 
@@ -15,7 +14,7 @@ class AuthController extends Controller {
             try {
                 Security::verifyCsrfToken($_POST['_token'] ?? '');
                 
-                $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+                $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
                 $password = $_POST['password'];
 
                 if (Auth::login($email, $password)) {
@@ -26,7 +25,7 @@ class AuthController extends Controller {
 
             } catch (\Exception $e) {
                 return $this->view('login', [
-                    'error' => $e->getMessage(),
+                    'webError' => $e->getMessage(),
                     'csrfToken' => Security::generateCsrfToken()
                 ]);
             }
@@ -48,7 +47,6 @@ class AuthController extends Controller {
                 $username = htmlspecialchars($_POST['username'], ENT_QUOTES, 'UTF-8');
                 $role = 'user';
 
-
                 $errors = Validator::isValidPassword($password, 'password', $errors);
                 $errors = Validator::isValidUserName($username, 'username', $errors);
                 $errors = Validator::isValidEmail($email, 'email', $errors);
@@ -61,18 +59,17 @@ class AuthController extends Controller {
                         'csrfToken' => Security::generateCsrfToken()
                     ]);
                 }
+
                 User::create([
                     'username' => $username,
                     'email' => $email,
                     'password' => password_hash($password, PASSWORD_DEFAULT),
                     'role' => $role
                 ]);
-                
 
                 $this->redirect('/login');
 
             } catch (\Exception $e) {
-
                 return $this->view('signup', [
                     'webError' => $e->getMessage(),
                     'csrfToken' => Security::generateCsrfToken()
