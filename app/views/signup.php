@@ -1,7 +1,16 @@
-
 <?php
 
-include 'partials/header.php'; ?>
+include 'partials/header.php';
+use App\Core\Security;
+?>
+
+
+<?php if (!empty($webError)): ?>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Error!</strong>
+        <span class="block sm:inline"><?php echo $webError; ?></span>
+    </div>
+<?php endif; ?>
 
 
 <!-- Signup Page -->
@@ -9,34 +18,58 @@ include 'partials/header.php'; ?>
     <div class="relative bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md z-10">
         <div class="absolute -top-8 -left-8 w-24 h-24 bg-purple-200 rounded-full blur-xl opacity-50"></div>
         <div class="absolute -bottom-8 -right-8 w-24 h-24 bg-blue-200 rounded-full blur-xl opacity-50"></div>
-        
+
         <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Create Account</h2>
-        
-        <form class="space-y-6">
+
+        <form class="space-y-6" method="post" action="/signup">
+
+            <input type="hidden" name="_token" value="<?= Security::generateCsrfToken() ?>">
+
+
+            <?php if (!empty($userNameErrors)): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline"><?php echo $userNameErrors; ?></span>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($emailErrors)): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline"><?php echo $emailErrors; ?></span>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($passwordErrors)): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline"><?php echo $passwordErrors; ?></span>
+                </div>
+            <?php endif; ?>
             <div>
                 <label class="block text-gray-700 mb-2">Full Name</label>
-                <input type="text" 
-                       class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-purple-500 transition-colors"
-                       placeholder="John Doe">
+                <input type="text" name="username"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-purple-500 transition-colors"
+                    placeholder="John Doe">
             </div>
-            
+
             <div>
                 <label class="block text-gray-700 mb-2">Email</label>
-                <input type="email" 
-                       class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-purple-500 transition-colors"
-                       placeholder="Enter your email">
+                <input type="email" name="email"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-purple-500 transition-colors"
+                    placeholder="Enter your email">
             </div>
-            
+
             <div>
                 <label class="block text-gray-700 mb-2">Password</label>
-                <input type="password" 
-                       class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-purple-500 transition-colors"
-                       placeholder="••••••••">
+                <input type="password" name="password"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-purple-500 transition-colors"
+                    placeholder="••••••••">
             </div>
-            
-            <a href="/create" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg hover:scale-[1.02] transition-transform">
+
+            <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg hover:scale-[1.02] transition-transform">
                 Sign Up
-            </a>
+            </button>
         </form>
 
         <div class="mt-8">
@@ -55,8 +88,8 @@ include 'partials/header.php'; ?>
         </div>
 
         <p class="text-center mt-8 text-gray-500">
-            Already have an account? 
-            <a href="/login" class="text-purple-600 hover:text-purple-700 font-medium">Sign in</a>
+            Already have an account?
+            <a href="/login" class="text-purple-600 hover:text-purple-700 font-medium">Log in</a>
         </p>
     </div>
 
