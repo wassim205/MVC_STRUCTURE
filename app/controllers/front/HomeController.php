@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers\Front; // <-- Namespace avec majuscules
+namespace App\Controllers\Front;
 use App\Core\Controller;
 use App\Models\User;
 

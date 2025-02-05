@@ -3,6 +3,14 @@
 include 'partials/header.php'; ?>
 
 
+<?php if (!empty($webError)): ?>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Error!</strong>
+        <span class="block sm:inline"><?php echo $webError; ?></span>
+    </div>
+<?php endif; ?>
+
+
 <!-- Signup Page -->
 <div id="signupPage" class="fixed inset-0 flex items-center justify-center p-4">
     <div class="relative bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md z-10">
@@ -12,8 +20,27 @@ include 'partials/header.php'; ?>
         <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Create Account</h2>
 
         <form class="space-y-6" method="post">
-        <?php if (isset($error)): ?>
-                <div class="error bg-red-20"><?= $error ?></div>
+
+            <input type="hidden" name="_token" value="<?php echo $csrfToken; ?>">
+            <?php if (!empty($passwordErrors)): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline"><?php echo $passwordErrors; ?></span>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($emailErrors)): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline"><?php echo $emailErrors; ?></span>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($userNameErrors)): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline"><?php echo $userNameErrors; ?></span>
+                </div>
             <?php endif; ?>
             <div>
                 <label class="block text-gray-700 mb-2">Full Name</label>

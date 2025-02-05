@@ -4,6 +4,7 @@ namespace App\Controllers\Front;
 use App\Core\Controller;
 use App\Core\Auth;
 use App\Core\Security;
+use App\Core\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -37,6 +38,7 @@ class AuthController extends Controller {
     }
 
     public function signup() {
+        $errors = [];
         if ($this->isPost()) {
             try {
                 Security::verifyCsrfToken($_POST['_token'] ?? '');
@@ -45,40 +47,34 @@ class AuthController extends Controller {
                 $password = $_POST['password'];
                 $username = htmlspecialchars($_POST['username'], ENT_QUOTES, 'UTF-8');
                 $role = 'user';
-                // $email = $_POST['email'];
-                // $password = $_POST['password'];
-                // $username = $_POST['username'];
-                // $role = 'user';
-                // if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                // $this->redirect('/signup');
 
-                //     throw new \Exception('Invalid email format');
-                // }
 
-                // if (User::where('email', $email)->exists()) {
-                // $this->redirect('/signup');
+                $errors = Validator::isValidPassword($password, 'password', $errors);
+                $errors = Validator::isValidUserName($username, 'username', $errors);
+                $errors = Validator::isValidEmail($email, 'email', $errors);
 
-                //     throw new \Exception('Email already registered');
-                // }
-
-                // if (strlen($password) < 8) {
-                    
-                // $this->redirect('/signup');
-                //     throw new \Exception('Password must be 8+ characters');
-                // }
-
+                if (!empty($errors)) {
+                    return $this->view('signup', [
+                        'passwordErrors' => $errors['password'],
+                        'emailErrors' => $errors['email'],
+                        'userNameErrors' => $errors['username'],
+                        'csrfToken' => Security::generateCsrfToken()
+                    ]);
+                }
                 User::create([
                     'username' => $username,
                     'email' => $email,
-                    'password' => $password,
+                    'password' => password_hash($password, PASSWORD_DEFAULT),
                     'role' => $role
                 ]);
+                
 
                 $this->redirect('/login');
 
             } catch (\Exception $e) {
+
                 return $this->view('signup', [
-                    'error' => $e->getMessage(),
+                    'webError' => $e->getMessage(),
                     'csrfToken' => Security::generateCsrfToken()
                 ]);
             }
