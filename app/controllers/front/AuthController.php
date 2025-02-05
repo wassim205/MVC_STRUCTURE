@@ -18,7 +18,13 @@ class AuthController extends Controller {
                 $password = $_POST['password'];
 
                 if (Auth::login($email, $password)) {
-                    $this->redirect('/dashboard');
+                    if (Auth::hasRole('user')) {
+                        
+                    $this->redirect('/Home');
+                    }
+                    else if(Auth::hasRole('admin')){
+                        $this->redirect('/Admin');
+                    }
                 }
 
                 throw new \Exception('Invalid email or password');
