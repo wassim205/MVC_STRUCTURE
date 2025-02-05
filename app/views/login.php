@@ -6,26 +6,31 @@
         <!-- Floating background elements -->
         <div class="absolute -top-8 -left-8 w-24 h-24 bg-purple-200 rounded-full blur-xl opacity-50"></div>
         <div class="absolute -bottom-8 -right-8 w-24 h-24 bg-blue-200 rounded-full blur-xl opacity-50"></div>
-        
+
         <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Welcome Back</h2>
-        
-        <form class="space-y-6">
+
+        <form class="space-y-6" method="post">
             <div>
                 <label class="block text-gray-700 mb-2">Email</label>
-                <input type="email" 
-                       class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-purple-500 transition-colors"
-                       placeholder="Enter your email">
+                <input type="email"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-purple-500 transition-colors"
+                    placeholder="Enter your email">
             </div>
-            
+
             <div>
                 <label class="block text-gray-700 mb-2">Password</label>
-                <input type="password" 
-                       class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-purple-500 transition-colors"
-                       placeholder="••••••••">
+                <input type="password"
+                    class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-purple-500 transition-colors"
+                    placeholder="••••••••">
             </div>
-            
+
+
+            <?php if (isset($error)): ?>
+                <div class="error"><?= $error ?></div>
+            <?php endif; ?>
+
             <button class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg hover:scale-[1.02] transition-transform">
-                Sign In
+                Log In
             </button>
         </form>
 
@@ -40,16 +45,16 @@
                     <img src="https://www.svgrepo.com/show/355037/google.svg" class="w-6 h-6" alt="Google">
                 </button>
                 <button class="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow">
-                    <img src="https://www.svgrepo.com/show/448234/facebook.svg" class="w-6 h-6" alt="Facebook">
+                    <img src="https://cdn-icons-png.flaticon.com/512/15047/15047435.png" class="w-7 h-7" alt="Facebook">
                 </button>
                 <button class="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow">
-                    <img src="https://www.svgrepo.com/show/475654/github-color.svg" class="w-6 h-6" alt="GitHub">
+                    <img src="https://www.svgrepo.com/show/475654/github-color.svg" class="w-7 h-7" alt="GitHub">
                 </button>
             </div>
         </div>
 
         <p class="text-center mt-8 text-gray-500">
-            Don't have an account? 
+            Don't have an account?
             <a href="/signup" class="text-purple-600 hover:text-purple-700 font-medium">Sign up</a>
         </p>
     </div>
@@ -61,4 +66,5 @@
 
 
 </body>
+
 </html>

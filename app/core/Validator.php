@@ -11,4 +11,10 @@ class Validator {
         }
         return $errors;
     }
+
+    public function min($value){
+        if ($value < 8) {
+            throw new \Exception("La valeur doit être supérieure ou égale à 8");
+        }
+    }
 }
