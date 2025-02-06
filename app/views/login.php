@@ -20,6 +20,28 @@ use App\Core\Security;
 
         <form class="space-y-6" method="post" action="/login">
         <input type="hidden" name="_token" value="<?= Security::generateCsrfToken() ?>">
+
+        
+        <?php if (!empty($userNameErrors)): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline"><?php echo $userNameErrors; ?></span>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($emailErrors)): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline"><?php echo $emailErrors; ?></span>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($passwordErrors)): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline"><?php echo $passwordErrors; ?></span>
+                </div>
+            <?php endif; ?>
    
             
             <div>

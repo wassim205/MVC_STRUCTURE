@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require __DIR__ . '/../vendor/autoload.php';
 use App\Core\Router;
@@ -10,6 +9,8 @@ $dotenv->load();
 
 Database::init();
 
+use App\Core\Session;
+Session::start();
 $router = new Router();
 require __DIR__ . '/../config/routes.php';
 $router->dispatch();
