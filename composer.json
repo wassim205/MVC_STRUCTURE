@@ -15,5 +15,8 @@
             "App\\": "app/",
             "App\\Controllers\\": "app/controllers/"
         }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^7.2"
     }
 }

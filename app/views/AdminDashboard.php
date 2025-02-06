@@ -26,6 +26,12 @@
                     <li class="hover:bg-indigo-700 rounded p-2 cursor-pointer">
                         <i class="fas fa-cogs mr-2"></i>Settings
                     </li>
+                    <li class="hover:bg-indigo-700 rounded p-2 cursor-pointer">
+                        <a href="/logout" class="logout-link">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>

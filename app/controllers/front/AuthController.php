@@ -51,7 +51,7 @@ class AuthController extends Controller {
                 $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
                 $password = $_POST['password'];
                 $username = htmlspecialchars($_POST['username'], ENT_QUOTES, 'UTF-8');
-                $role = 'user';
+                $role = User::count() == 0 ? 'admin' : 'user';
 
                 $errors = Validator::isValidPassword($password, 'password', $errors);
                 $errors = Validator::isValidUserName($username, 'username', $errors);
