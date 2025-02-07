@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Models\User;
+
 class Validator
 {
     public static function validate($data, $rules)
@@ -42,7 +44,7 @@ class Validator
             return $errors;
         }
 
-        if (!preg_match("/[!@#$%^&*()_+=-{};:'<>,.]/", $password)) {
+        if (!preg_match("/[!@#$%^&*()_+-{};:'<>,.]/", $password)) {
             $errors[$field] = "The password must contain at least one special character.";
             return $errors;
         }
@@ -67,6 +69,16 @@ class Validator
             return $errors;
         }
 
+        return $errors;
+    }
+
+    public static function isEmailExists($email, $field, $errors = [])
+    {
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            $errors[$field] = "The email address is already Exists.";
+            return $errors;
+        }
         return $errors;
     }
 

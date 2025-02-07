@@ -1,12 +1,12 @@
 <?php
+
 namespace App\Core;
+
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
-class Model extends EloquentModel {
-    
-    public static function init() {
-        $capsule = new \Illuminate\Database\Capsule\Manager;
-        $capsule->addConnection(include __DIR__ . '/../../config/config.php');
-        $capsule->bootEloquent();
-    }
+class Model extends EloquentModel
+{
+
+    public $guarded = ['id'];
+    public $timestamp = true;
 }
