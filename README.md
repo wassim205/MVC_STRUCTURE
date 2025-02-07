@@ -80,23 +80,25 @@ Create Controllers and Views:
 Add controllers in the app/controllers directory.
 Create views in the app/views directory.
 Usage
-To run the application:
+
+### To run the application:
 
 Using a Web Server: Point your web server to the public/ directory.
 Direct Access: Open the public/index.php file in your web browser.
 This will launch the application using the configured routes, controllers, and views.
 
-Best Practices
-Separation of Concerns: Keep your models, views, and controllers separate.
-Security: Use the built-in security features to protect against SQL Injection, XSS, and CSRF.
-Modularity: Components are designed to be modular and easily replaceable.
-Autoloading: Composer handles dependency management and autoloading for optimal performance.
-Contributing
-Contributions are welcome! To contribute:
+## Best Practices
+### Separation of Concerns: Keep your models, views, and controllers separate.
+### Security: Use the built-in security features to protect against SQL Injection, XSS, and CSRF.
+### Modularity: Components are designed to be modular and easily replaceable.
+### Autoloading: Composer handles dependency management and autoloading for optimal performance.
+### Contributing
+### Contributions are welcome! To contribute:
 
 Fork the repository.
 Create a new feature branch.
 Make your changes.
 Submit a pull request for review.
-Authors
+
+## Authors
 Wassim El Mourabit
