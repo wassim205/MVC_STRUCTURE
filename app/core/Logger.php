@@ -1,15 +1,14 @@
 <?php
+
 namespace App\Core;
 
 class Logger
 {
-    private $driver;
     private $path;
     private $level;
 
-    public function __construct($driver, $path, $level)
+    public function __construct($path, $level)
     {
-        $this->driver = $driver;
         $this->path = $path;
         $this->level = $level;
     }
@@ -20,10 +19,16 @@ class Logger
             $this->writeLog($message, $level);
         }
     }
+    public function logError($message, $level)
+    {
+        if ($this->level === 'error' || $this->level === $level) {
+            $this->writeLog($message, $level);
+        }
+    }
 
     private function writeLog($message, $level)
     {
-        $logMessage = date('Y-m-d H:i:s') . ' - ' . $level . ' - ' . $message . PHP_EOL;
+        $logMessage = date(format: 'Y-m-d H:i:s') . ' - ' . $level . ' - ' . $message . PHP_EOL;
         file_put_contents($this->path, $logMessage, FILE_APPEND);
     }
 }

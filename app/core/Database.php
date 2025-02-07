@@ -3,7 +3,6 @@
 namespace App\Core;
 
 use App\Core\Logger;
-
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Database
@@ -23,7 +22,7 @@ class Database
             $capsule->setAsGlobal();
             $capsule->bootEloquent();
         } catch (\Exception $e) {
-            $logger = new Logger('file', __DIR__ . '/../logs/app.log', 'error');
+            $logger = new Logger(__DIR__ . '/../logs/app.log', 'error');
             $logger->log($e->getMessage(), 'error');
             throw new \Exception('Database connection failed: ' . $e->getMessage());
         }

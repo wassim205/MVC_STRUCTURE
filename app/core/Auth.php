@@ -8,7 +8,6 @@ class Auth {
     public static function login($email, $password) {
 
         $user = User::where('email', $email)->first();
-        // dd(Security::verifyPassword($password, $user->password));
         if ($user && Security::verifyPassword($password, $user->password)) {
             session_regenerate_id(true);
             Session::set('user_id', $user->id);

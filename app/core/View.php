@@ -2,11 +2,19 @@
 
 namespace App\Core;
 
+use Twig\Environment;
 class View
 {
+
+    private static $twig;
+
+    public static function setTwig(Environment $twig)
+    {
+        self::$twig = $twig;
+    }
+
     public static function render($view, $data = [])
     {
-        extract($data);
-        require __DIR__ . "/../../app/views/$view.php";
+        echo self::$twig->render($view . '.twig', $data);
     }
 }

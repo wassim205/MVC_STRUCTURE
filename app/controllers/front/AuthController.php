@@ -37,19 +37,20 @@ class AuthController extends Controller
                     if (Auth::login($email, $password)) {
                         if (Auth::hasRole('user')) {
                             $this->redirect('/Home');
-                        } else if (Auth::hasRole('admin')) {
+                        } elseif (Auth::hasRole('admin')) {
                             $this->redirect('/Admin');
                         }
                     } else {
-                        throw new \Exception('Invalid email or password');
+                        return View::render('login', [
+                            'webError' => 'Invalid email or password',
+                            'csrfToken' => Security::generateCsrfToken()
+                        ]);
                     }
-
-                    throw new \Exception('Invalid email or password');
                 } catch (\Exception $e) {
-                    $logger = new Logger('file', __DIR__ . '/../logs/app.log', 'debug');
-                    $logger->log($e->getMessage(), 'error');
+                    $logger = new Logger(__DIR__ . '/../logs/app.log', 'debug');
+                    $logger->log($e->getMessage(), 'debug');
                     return View::render('login', [
-                        'webError' => 'An error occurred while logging in.',
+                        'webError' => 'An error occurred while logging in',
                         'csrfToken' => Security::generateCsrfToken()
                     ]);
                 }
@@ -59,15 +60,14 @@ class AuthController extends Controller
                 'csrfToken' => Security::generateCsrfToken()
             ]);
         } catch (\Exception $e) {
-            $logger = new Logger('file', __DIR__ . '/../logs/app.log', 'debug');
-            $logger->log($e->getMessage(), 'error');
+            $logger = new Logger(__DIR__ . '/../logs/app.log', 'debug');
+            $logger->log($e->getMessage(), 'debug');
             return View::render('login', [
-                'webError' => 'An unexpected error occurred.',
+                'webError' => 'An unexpected error occurred',
                 'csrfToken' => Security::generateCsrfToken()
             ]);
         }
     }
-
 
     public function signup()
     {
@@ -105,19 +105,20 @@ class AuthController extends Controller
 
                     $this->redirect('/login');
                 } catch (\Exception $e) {
-                    $this->logError($e);
+                    $logger = new Logger(__DIR__ . '/../logs/app.log', 'error');
+                    $logger->logError($e->getMessage(), 'error');
                     return View::render('signup', [
                         'webError' => 'An error occurred while signing up.',
                         'csrfToken' => Security::generateCsrfToken()
                     ]);
                 }
             }
-
             View::render('signup', [
                 'csrfToken' => Security::generateCsrfToken()
             ]);
         } catch (\Exception $e) {
-            $this->logError($e);
+            $logger = new Logger(__DIR__ . '/../logs/app.log', 'error');
+            $logger->logError($e->getMessage(), 'error');
             return View::render('signup', [
                 'webError' => 'An unexpected error occurred.',
                 'csrfToken' => Security::generateCsrfToken()
@@ -125,11 +126,7 @@ class AuthController extends Controller
         }
     }
 
-    private function logError(\Exception $e)
-    {
-        $logger = new Logger('file', __DIR__ . '/../logs/app.log', 'error');
-        $logger->log($e->getMessage() . "\n" . $e->getTraceAsString(), 'error');
-    }
+
 
     public function logout()
     {
