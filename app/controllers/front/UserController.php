@@ -11,8 +11,6 @@ class UserController extends Controller
     public function index()
     {
         try {
-            // dd('here we are');
-            // dd($_SESSION);
             if (Session::isset('user_id') && $_SESSION['role'] == 'user') {
 
                 $user = User::find(Session::get('user_id'));
@@ -21,8 +19,8 @@ class UserController extends Controller
                 $this->redirect('/login');
             }
         } catch (\Exception $e) {
-            $log = new Logger(__DIR__ . '/../logs/app.log', 'error');
-            $log->logError($e->getMessage(), 'error');
+            Logger::setLogLevel('error');
+            Logger::error($e->getMessage());
             View::render('login', ['webError' => 'An error occurred, please try again']);
         }
     }

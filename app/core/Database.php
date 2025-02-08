@@ -22,8 +22,9 @@ class Database
             $capsule->setAsGlobal();
             $capsule->bootEloquent();
         } catch (\Exception $e) {
-            $logger = new Logger(__DIR__ . '/../logs/app.log', 'error');
-            $logger->log($e->getMessage(), 'error');
+           
+            Logger::setLogLevel('error');
+            Logger::error($e->getMessage()); 
             throw new \Exception('Database connection failed: ' . $e->getMessage());
         }
     }

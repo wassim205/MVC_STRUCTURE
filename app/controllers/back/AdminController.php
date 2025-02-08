@@ -17,8 +17,9 @@ class AdminController extends Controller {
                 $this->redirect('/login');
             }
         } catch (\Exception $e) {
-            $log = new Logger(__DIR__ . '/../logs/app.log', 'error');
-            $log->logError($e->getMessage(), 'error');
+            
+            Logger::setLogLevel('error');
+            Logger::error($e->getMessage());
             View::render('login', ['webError' => 'An error occurred, please try again']);
         }
     }
